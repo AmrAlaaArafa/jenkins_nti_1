@@ -15,11 +15,12 @@ pipeline {
                 echo "Hello World from trigger ${params.ENVIRONMENT}"
             }
         }
+        
 
         stage('Hello Jenkins') {
             steps {
                 echo "Hello Jenkins from ${params.ENVIRONMENT}"
-                error("Intentional error")
+                error("Intentional failure")
             }
         }
     }
@@ -28,21 +29,20 @@ pipeline {
         success {
             echo 'Pipeline completed successfully!'
         }
-       failure {
-    script {
-        try {
+
+        failure {
             emailext(
-            
-                subject: "Jenkins Build Failed",
-                body: "This is a test email.",
+                subject: "❌ ${env.JOB_NAME} #${env.BUILD_NUMBER} Failed",
+                body: """
+Job: ${env.JOB_NAME}
+Build: #${env.BUILD_NUMBER}
+Environment: ${params.ENVIRONMENT}
+
+Build URL:
+${env.BUILD_URL}
+""",
                 to: "zozowaleed122@gmail.com"
             )
-            echo "Email sent successfully."
-        } catch (Exception e) {
-            echo "Email failed: ${e.getMessage()}"
-            throw e
         }
-    }
-}
     }
 }
