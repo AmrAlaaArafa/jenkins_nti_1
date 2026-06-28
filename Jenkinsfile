@@ -32,9 +32,10 @@ pipeline {
     script {
         try {
             emailext(
-                to: "zozowaleed122@gmail.com",
+            
                 subject: "Jenkins Build Failed",
-                body: "This is a test email."
+                body: "This is a test email.",
+                to: "zozowaleed122@gmail.com"
             )
             echo "Email sent successfully."
         } catch (Exception e) {
