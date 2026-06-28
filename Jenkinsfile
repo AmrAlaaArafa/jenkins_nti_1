@@ -28,26 +28,20 @@ pipeline {
         success {
             echo 'Pipeline completed successfully!'
         }
-        failure {
+       failure {
+    script {
+        try {
             emailext(
-            to: "zozowaleed122@gmail.com",
-            subject: "❌ Jenkins Build Failed: ${env.JOB_NAME}",
-            body: """
-Hello,
-
-Your Jenkins pipeline has failed.
-
-Job Name: ${env.JOB_NAME}
-Build Number: ${env.BUILD_NUMBER}
-Environment: ${params.ENVIRONMENT}
-
-Build URL:
-${env.BUILD_URL}
-
-Regards,
-Jenkins
-"""
-        )
+                to: "zozowaleed122@gmail.com",
+                subject: "Jenkins Build Failed",
+                body: "This is a test email."
+            )
+            echo "Email sent successfully."
+        } catch (Exception e) {
+            echo "Email failed: ${e.getMessage()}"
+            throw e
         }
+    }
+}
     }
 }
