@@ -19,6 +19,7 @@ pipeline {
         stage('Hello Jenkins') {
             steps {
                 echo "Hello Jenkins from ${params.ENVIRONMENT}"
+                error("Intentional error")
             }
         }
     }
@@ -28,7 +29,25 @@ pipeline {
             echo 'Pipeline completed successfully!'
         }
         failure {
-            echo 'Pipeline failed!'
+            emailext(
+            to: 'zozowaleed122@gmail.com',
+            subject: "❌ Jenkins Build Failed: ${env.JOB_NAME}",
+            body: """
+Hello,
+
+Your Jenkins pipeline has failed.
+
+Job Name: ${env.JOB_NAME}
+Build Number: ${env.BUILD_NUMBER}
+Environment: ${params.ENVIRONMENT}
+
+Build URL:
+${env.BUILD_URL}
+
+Regards,
+Jenkins
+"""
+        )
         }
     }
 }
