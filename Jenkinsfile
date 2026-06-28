@@ -41,7 +41,7 @@ Environment: ${params.ENVIRONMENT}
 Build URL:
 ${env.BUILD_URL}
 """,
-                to: "zozowaleed122@gmail.com"
+                to: "mamdouhhazemm@gmail.com"
             )
         }
     }
