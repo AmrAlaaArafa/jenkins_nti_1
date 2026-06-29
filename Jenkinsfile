@@ -1,48 +1,18 @@
 pipeline {
-    agent any
-
-    parameters {
-        choice(
-            name: 'ENVIRONMENT',
-            choices: ['dev', 'stg', 'prod'],
-            description: 'Select the environment'
-        )
-    }
+    agent any // Runs the pipeline on any available executor/agent
 
     stages {
         stage('Hello World') {
             steps {
-                echo "Hello World from trigger ${params.ENVIRONMENT}"
+                echo 'Hello from the firs pipeline.'
             }
         }
         
-
-        stage('Hello Jenkins') {
+        stage('Hello Again') {
             steps {
-                echo "Hello Jenkins from ${params.ENVIRONMENT}"
-                error("Intentional failure")
+                echo 'Hello from the second  piepline.'
             }
         }
     }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-
-        failure {
-            emailext(
-                subject: "❌ ${env.JOB_NAME} #${env.BUILD_NUMBER} Failed",
-                body: """
-Job: ${env.JOB_NAME}
-Build: #${env.BUILD_NUMBER}
-Environment: ${params.ENVIRONMENT}
-
-Build URL:
-${env.BUILD_URL}
-""",
-                to: "zozowaleed122@gmail.com"
-            )
-        }
-    }
+    
 }
