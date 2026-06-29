@@ -4,15 +4,11 @@ pipeline {
     stages {
         stage('Hello World') {
             steps {
-                echo 'Hello from the firs pipeline.'
+              sh './hello.sh'
             }
         }
-        
-        stage('Hello Again') {
-            steps {
-                echo 'Hello from the second  piepline.'
-            }
+      
         }
     }
     
-}
+
